@@ -1,11 +1,20 @@
 package vista;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
+import controlador.MenuBarController;
 
-public class MenuBar extends JMenuBar {
+import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MenuBar extends JMenuBar implements ActionListener, MenuListener {
 
     private JMenu appsMenu, officeMenu, toolsMenu, cmdMenu, pcMenu;
+    private JMenuItem notepad, calculator, word, excel, paint, vol, recortes;
+
+    //Controlador
+    MenuBarController controller = new MenuBarController();
 
     public MenuBar(){
 
@@ -24,23 +33,96 @@ public class MenuBar extends JMenuBar {
         appsMenu.add(toolsMenu);
 
         /* Items del menu de Office*/
-        JMenuItem menuItem21=new JMenuItem("Word");
-        officeMenu.add(menuItem21);
+        word=new JMenuItem("Word");
+        officeMenu.add(word);
 
-        JMenuItem menuItem22=new JMenuItem("Excel");
-        officeMenu.add(menuItem22);
+        excel=new JMenuItem("Excel");
+        officeMenu.add(excel);
 
-        JMenuItem menuItem23=new JMenuItem("Paint");
-        officeMenu.add(menuItem23);
+        paint=new JMenuItem("Paint");
+        officeMenu.add(paint);
 
 
         /* Items del menu de herramientas */
-        JMenuItem menuItem31=new JMenuItem("Bloc de notas");
-        toolsMenu.add(menuItem31);
+        notepad=new JMenuItem("Bloc de notas");
+        toolsMenu.add(notepad);
 
-        JMenuItem menuItem32=new JMenuItem("Calculadora");
-        toolsMenu.add(menuItem32);
+        calculator=new JMenuItem("Calculadora");
+        toolsMenu.add(calculator);
+
+        vol=new JMenuItem("Mezclador de volumen");
+        toolsMenu.add(vol);
+
+        recortes=new JMenuItem("Herramienta de recortes");
+        toolsMenu.add(recortes);
+
+        //Agregando las funciones
+        //MenuListeners
+        cmdMenu.addMenuListener(this);
+        pcMenu.addMenuListener(this);
+
+        //ActionListeners
+        notepad.addActionListener(this);
+        calculator.addActionListener(this);
+        word.addActionListener(this);
+        excel.addActionListener(this);
+        paint.addActionListener(this);
+        vol.addActionListener(this);
+        recortes.addActionListener(this);
 
     }
 
+    //ActionListener
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == notepad){
+            controller.AbrirBlocDeNotas();
+        }
+
+        if (e.getSource() == calculator){
+            controller.AbrirCalculadora();
+        }
+
+        if (e.getSource() == word){
+            controller.AbrirWord();
+        }
+
+        if (e.getSource() == excel){
+            controller.AbrirExcel();
+        }
+
+        if (e.getSource() == paint){
+            controller.AbrirPaint();
+        }
+
+        if (e.getSource() == vol){
+            controller.AbrirMezcladorDeVolumen();
+        }
+
+        if (e.getSource() == recortes){
+            controller.AbrirHerramientaDeRecortes();
+        }
+    }
+
+    //MenuListener
+    @Override
+    public void menuSelected(MenuEvent e) {
+        if (e.getSource() == cmdMenu){
+            controller.AbrirTerminal();
+        }
+
+        if (e.getSource() == pcMenu){
+            System.out.println("SELECCIONO EL MENU DEL PC");
+        }
+    }
+
+    @Override
+    public void menuDeselected(MenuEvent e) {
+
+    }
+
+    @Override
+    public void menuCanceled(MenuEvent e) {
+
+    }
 }
