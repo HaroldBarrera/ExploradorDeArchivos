@@ -40,6 +40,7 @@ public class Archivos extends ScrollPane {
         //Creacion del JTree
         JTree jt=new JTree(main);
 
+        //Añadir el JTree
         add(jt);
     }
 
