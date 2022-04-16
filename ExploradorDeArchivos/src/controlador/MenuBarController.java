@@ -30,7 +30,9 @@ public class MenuBarController {
 
     public void AbrirWord() {
         try {
-            Runtime.getRuntime().exec("winword");
+            //String rutaWord = C:\Program Files\Microsoft Office\Office14\WINWORD.EXE;
+            String rutaWord = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Word.EXE";
+            Runtime.getRuntime().exec(rutaWord);
         } catch (IOException e) {
             e.printStackTrace();
         }

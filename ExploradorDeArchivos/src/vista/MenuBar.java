@@ -112,7 +112,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MenuListener {
         }
 
         if (e.getSource() == pcMenu){
-            System.out.println("SELECCIONO EL MENU DEL PC");
+            new ConfiguracionDelPC();
         }
     }
 
