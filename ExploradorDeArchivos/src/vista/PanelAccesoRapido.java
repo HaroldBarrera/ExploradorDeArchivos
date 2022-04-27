@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 public class PanelAccesoRapido extends JPanel {
 
     archivosController controller = new archivosController();
+    JButton creartxt;
 
     public PanelAccesoRapido(){
         setBackground(Color.WHITE);
@@ -59,9 +60,19 @@ public class PanelAccesoRapido extends JPanel {
             }
         });
 
+        creartxt = new JButton("Crear txt");
+        creartxt.setBounds(15,15,150,40);
+        creartxt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.crearArchivoDeTexto();
+            }
+        });
+
         add(c1);
         add(c2);
         add(c3);
+        add(creartxt);
         add(computador);
     }
 

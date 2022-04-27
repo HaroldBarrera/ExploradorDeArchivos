@@ -1,7 +1,9 @@
 package controlador;
 
 import javax.swing.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 
 public class archivosController {
 
@@ -40,6 +42,25 @@ public class archivosController {
             } else {
                 System.out.println("Error al copiar directorio");
             }
+        }
+    }
+
+    public void crearArchivoDeTexto(){
+        try {
+            String nombretexto = JOptionPane.showInputDialog("DIGITE NOMBRE DEL ARCHIVO DE TEXTO A CREAR:");
+            String ruta = "C:\\Users\\hsbar\\Desktop\\"+nombretexto+".txt";
+            String contenido = JOptionPane.showInputDialog("DIGITE EL CONTENIDO DEL TEXTO:");
+            File file = new File(ruta);
+            // Si el archivo no existe es creado
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(contenido);
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
