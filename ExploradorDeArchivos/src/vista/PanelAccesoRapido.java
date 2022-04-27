@@ -12,6 +12,7 @@ public class PanelAccesoRapido extends JPanel {
 
     archivosController controller = new archivosController();
     JButton creartxt;
+    JButton movertxt;
 
     public PanelAccesoRapido(){
         setBackground(Color.WHITE);
@@ -69,10 +70,30 @@ public class PanelAccesoRapido extends JPanel {
             }
         });
 
+        movertxt = new JButton("Mover txt");
+        movertxt.setBounds(275,15, 150,40);
+        movertxt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.moverArchivoDeTexto();
+            }
+        });
+
+        JButton borratxt = new JButton("Eliminar txt");
+        borratxt.setBounds(500,15, 150,40);
+        borratxt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.borrarArchivoDeTexto();
+            }
+        });
+
         add(c1);
         add(c2);
         add(c3);
         add(creartxt);
+        add(movertxt);
+        add(borratxt);
         add(computador);
     }
 

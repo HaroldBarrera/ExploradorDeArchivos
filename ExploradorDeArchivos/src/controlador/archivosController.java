@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class archivosController {
 
@@ -62,5 +67,32 @@ public class archivosController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void moverArchivoDeTexto(){
+        String carpeta1 = JOptionPane.showInputDialog("DIGITE NOMBRE DE LA CARPETA A INICIAL");
+        String carpeta2 = JOptionPane.showInputDialog("DIGITE NOMBRE DE LA CARPETA A FINAL");
+        Path origenPath = FileSystems.getDefault().getPath("C:\\Users\\hsbar\\Desktop\\"+carpeta1+"\\ejemplo1.txt");
+        Path destinoPath = FileSystems.getDefault().getPath("C:\\Users\\hsbar\\Desktop\\"+carpeta2+"\\ejemplo1.txt");
+
+        try {
+            Files.move(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
+
+    public void copiarArchivoDeTexto(){
+
+    }
+
+    public void borrarArchivoDeTexto(){
+        String arc = JOptionPane.showInputDialog("DIGITE EL NOMBRE DEL ARCHIVO A BORRAR: ");
+        File fichero = new File("C:\\Users\\hsbar\\Desktop\\"+arc+".txt");
+        fichero.delete();
+        if (!fichero.exists())
+            System.out.println("El fichero ha sido borrado satisfactoriamente");
+        else
+            System.out.println("El fichero no puede ser borrado");
     }
 }
