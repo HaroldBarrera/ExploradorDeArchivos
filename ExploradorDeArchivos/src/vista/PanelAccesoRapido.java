@@ -1,11 +1,16 @@
 package vista;
 
+import controlador.archivosController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class PanelAccesoRapido extends JPanel {
+
+    archivosController controller = new archivosController();
 
     public PanelAccesoRapido(){
         setBackground(Color.WHITE);
@@ -30,6 +35,27 @@ public class PanelAccesoRapido extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new ConfiguracionDelPC();
+            }
+        });
+
+        c1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.crearCarpeta();
+            }
+        });
+
+        c2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.borrarCarpeta();
+            }
+        });
+
+        c3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.copiarCarpeta();
             }
         });
 
