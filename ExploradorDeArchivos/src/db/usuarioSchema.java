@@ -11,6 +11,8 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
+
 import static com.mongodb.client.model.Filters.eq;
 
 public class usuarioSchema {
@@ -61,18 +63,25 @@ public class usuarioSchema {
         }
     }
 
-    public void readAll(){
-        System.out.println("Print the documents.");
-
+    public ArrayList<Object> readAll(){
         MongoCursor cursor = collection.find().iterator();
-
+        ArrayList<Object> listacuentas = new ArrayList<>();
         try {
             while (cursor.hasNext()) {
-                System.out.println(cursor.next().toString());
+                Object usuarioactual = cursor.next();
+                System.out.println(usuarioactual.toString());
+                listacuentas.add(usuarioactual);
             }
 
         } finally {
             cursor.close();
+        }
+        if (listacuentas.isEmpty()){
+            System.out.println("LA LISTA ESTA VACIA...");
+            return null;
+        }else{
+            System.out.println("TAMAÑO DE LA LISTA: " + listacuentas.size());
+            return listacuentas;
         }
     }
 

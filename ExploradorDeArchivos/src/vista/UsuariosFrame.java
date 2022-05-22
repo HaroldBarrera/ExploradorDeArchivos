@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class UsuariosFrame extends JFrame {
 
@@ -40,15 +41,14 @@ public class UsuariosFrame extends JFrame {
         crear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("CREAR");
                 controller.CrearUsuario();
+                actualizar();
             }
         });
 
         editar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("EDITAR");
                 controller.editarUsuario();
             }
         });
@@ -56,7 +56,6 @@ public class UsuariosFrame extends JFrame {
         eliminar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("ELIMINAR");
                 controller.borrarUsuario();
             }
         });
@@ -64,8 +63,6 @@ public class UsuariosFrame extends JFrame {
         ver.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("VER");
-                controller.VerUsuarios();
                 controller.buscarUsuario();
             }
         });
@@ -82,13 +79,27 @@ public class UsuariosFrame extends JFrame {
     }
 
     public JPanel panelMain(){
-        JPanel main = new JPanel();
-        //main.setLayout(null);
+        JPanel main = new JPanel();//Creando el JPanel
+        //Elementos
+        ArrayList<Object> cuentas = controller.VerUsuarios();
+        JTextArea listacuentas = new JTextArea();
+        listacuentas.setEditable(false);
+        listacuentas.setBounds(0, 0, 500, 350);
+        for(Object cuenta : cuentas){
+            listacuentas.append(cuenta.toString() + "\n");
+        }
 
+        //Agregando los elementos
         JLabel prueba = new JLabel("AQUI IRA LOS USUARIOS");
         main.setBorder(BorderFactory.createLineBorder(Color.blue));
-        main.add(prueba);
+        main.add(listacuentas);
 
+        //Regresando el JPanel creado
         return main;
+    }
+
+    private void actualizar(){
+        this.setVisible(false);
+        new UsuariosFrame();
     }
 }

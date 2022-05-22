@@ -3,6 +3,7 @@ package controlador;
 import db.usuarioSchema;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class usuariosController {
     usuarioSchema schema = new usuarioSchema();
@@ -17,8 +18,8 @@ public class usuariosController {
         schema.create(nombreusuario, clave);
     }
 
-    public void VerUsuarios(){
-        schema.readAll();
+    public ArrayList<Object> VerUsuarios(){
+        return schema.readAll();
     }
 
     public void buscarUsuario(){
