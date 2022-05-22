@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class MenuBar extends JMenuBar implements ActionListener, MenuListener {
 
-    private JMenu appsMenu, officeMenu, toolsMenu, cmdMenu, pcMenu;
+    private JMenu appsMenu, officeMenu, toolsMenu, cmdMenu, pcMenu, userMenu;
     private JMenuItem notepad, calculator, word, excel, paint, vol, recortes;
 
     //Controlador
@@ -22,9 +22,11 @@ public class MenuBar extends JMenuBar implements ActionListener, MenuListener {
         appsMenu=new JMenu("Aplicaciones");
         cmdMenu=new JMenu("Terminal");
         pcMenu=new JMenu("Configuracion del PC");
+        userMenu = new JMenu("Cuentas");
         add(appsMenu);
         add(cmdMenu);
         add(pcMenu);
+        add(userMenu);
 
         /* Submenus del menu de princiapl */
         officeMenu=new JMenu("Office");
@@ -60,6 +62,7 @@ public class MenuBar extends JMenuBar implements ActionListener, MenuListener {
         //MenuListeners
         cmdMenu.addMenuListener(this);
         pcMenu.addMenuListener(this);
+        userMenu.addMenuListener(this);
 
         //ActionListeners
         notepad.addActionListener(this);
@@ -113,6 +116,10 @@ public class MenuBar extends JMenuBar implements ActionListener, MenuListener {
 
         if (e.getSource() == pcMenu){
             new ConfiguracionDelPC();
+        }
+
+        if (e.getSource() == userMenu){
+            new UsuariosFrame();
         }
     }
 
