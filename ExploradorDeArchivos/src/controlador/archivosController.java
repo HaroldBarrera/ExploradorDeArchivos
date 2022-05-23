@@ -95,4 +95,17 @@ public class archivosController {
         else
             System.out.println("El fichero no puede ser borrado");
     }
+
+    public void contarNumeroArchivos(String direccion){
+        File folder = new File(direccion);
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+            }
+        }
+    }
 }

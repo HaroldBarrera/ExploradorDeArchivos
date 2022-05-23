@@ -95,6 +95,8 @@ public class PanelAccesoRapido extends JPanel {
         add(movertxt);
         add(borratxt);
         add(computador);
+
+        controller.contarNumeroArchivos("C:\\Users\\hsbar\\Desktop");
     }
 
 }
