@@ -39,4 +39,16 @@ public class usuariosController {
         String bus = JOptionPane.showInputDialog("NOMBRE DE USUARIO A ELIMINAR: ");
         schema.delete(bus);
     }
+
+    public String IniciarSesion(){
+        String nombreusuario = JOptionPane.showInputDialog("NOMBRE DE USUARIO:");
+        String clave = JOptionPane.showInputDialog("CONTRASEÑA:");
+        String[] datos = schema.login(nombreusuario);
+
+        if(nombreusuario.equals(datos[0]) && clave.equals(datos[1])){
+            return datos[0];
+        }else{
+            return "ERROR, USUARIO NO ENCONTRADO";
+        }
+    }
 }

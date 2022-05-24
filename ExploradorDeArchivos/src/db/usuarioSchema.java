@@ -63,6 +63,26 @@ public class usuarioSchema {
         }
     }
 
+    public String[] login(String username){
+        String[] datosusuario = new String[2];
+        Bson projectionFields = Projections.fields(
+                Projections.include("username", "password"),
+                Projections.excludeId());
+
+        Document doc = (Document) collection.find(eq("username", username))
+                .projection(projectionFields)
+                .first();
+
+        if (doc == null) {
+            System.out.println("No results found.");
+        } else {
+            System.out.println(doc.toJson());
+            datosusuario[0] = doc.get("username").toString();
+            datosusuario[1] = doc.get("password").toString();
+        }
+        return datosusuario;
+    }
+
     public ArrayList<Object> readAll(){
         MongoCursor cursor = collection.find().iterator();
         ArrayList<Object> listacuentas = new ArrayList<>();

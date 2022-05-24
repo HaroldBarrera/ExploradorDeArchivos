@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.archivosController;
+import controlador.usuariosController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ public class PanelAccesoRapido extends JPanel {
 
     public PanelAccesoRapido(){
         setLayout(null);
+        setBackground(Color.white);
 
         JLabel c1 = new JLabel("Documentos");
         c1.setIcon(new ImageIcon("carpeta.png"));
@@ -42,7 +44,34 @@ public class PanelAccesoRapido extends JPanel {
         add(computador);
 
         this.setComponentPopupMenu(new MenuClicDerecho());
-        controller.contarNumeroArchivos("C:\\Users\\hsbar\\Desktop");
+
+        //Login de usuarios
+        JPanel usuarios = panelLoginUsuario();
+        usuarios.setBounds(0,0, 685, 35);
+        add(usuarios);
     }
 
+    public JPanel panelLoginUsuario(){
+        JPanel user = new JPanel();
+        user.setBorder(BorderFactory.createLineBorder(Color.blue));
+
+        JLabel usuario = new JLabel("CONECTADO COMO:");
+        JLabel nombreusuario = new JLabel("prueba");
+
+        usuariosController usercontroller = new usuariosController();
+        nombreusuario.setText(usercontroller.IniciarSesion());
+
+        JButton signin = new JButton("CAMBIAR CUENTA");
+        signin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                nombreusuario.setText(usercontroller.IniciarSesion());
+            }
+        });
+
+        user.add(usuario);
+        user.add(nombreusuario);
+        user.add(signin);
+        return user;
+    }
 }
