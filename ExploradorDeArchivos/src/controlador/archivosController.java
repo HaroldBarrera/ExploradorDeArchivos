@@ -10,6 +10,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 public class archivosController {
 
@@ -98,17 +99,27 @@ public class archivosController {
     }
 
     //Archivos del panel principal
-    public void contarNumeroArchivos(String direccion){
+    public ArrayList<ArrayList<String>> contarNumeroArchivos(String direccion){
         File folder = new File(direccion);
         File[] listOfFiles = folder.listFiles();
+        ArrayList<ArrayList<String>> contenido = new ArrayList<>();
+        ArrayList<String> archivos = new ArrayList<>();
+        ArrayList<String> carpetas = new ArrayList<>();
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 System.out.println("File " + listOfFiles[i].getName());
+                archivos.add(listOfFiles[i].getName());
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
+                carpetas.add(listOfFiles[i].getName());
             }
         }
+
+        contenido.add(archivos);
+        contenido.add(carpetas);
+
+        return contenido;
     }
 
     //Archivos del Jtree
@@ -118,11 +129,9 @@ public class archivosController {
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                System.out.println("File " + listOfFiles[i].getName());
                 DefaultMutableTreeNode node=new DefaultMutableTreeNode(listOfFiles[i].getName());
                 rama.add(node);
             } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
                 String carpeta = "\\" + listOfFiles[i].getName();
                 String nuevaDireccion = direccion + carpeta;
                 DefaultMutableTreeNode node=new DefaultMutableTreeNode(listOfFiles[i].getName());

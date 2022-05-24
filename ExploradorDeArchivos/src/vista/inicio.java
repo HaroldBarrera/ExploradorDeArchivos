@@ -23,7 +23,10 @@ public class inicio extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         add(menu, BorderLayout.NORTH);
-        add(panel);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(panel);
+        add(scrollPane);
         add(archivos, BorderLayout.WEST);
     }
 

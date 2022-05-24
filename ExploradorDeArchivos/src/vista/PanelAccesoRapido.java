@@ -2,32 +2,132 @@ package vista;
 
 import controlador.archivosController;
 import controlador.usuariosController;
+import modelos.archivo;
+import modelos.directorio;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class PanelAccesoRapido extends JPanel {
 
     archivosController controller = new archivosController();
+    static int WIDTH = 700;
+    static int HEIGHT = 700;
+    static int UNIDADES = 64;
 
     public PanelAccesoRapido(){
         setLayout(null);
         setBackground(Color.white);
+        setSize(WIDTH, HEIGHT);
 
-        JLabel c1 = new JLabel("Documentos");
-        c1.setIcon(new ImageIcon("carpeta.png"));
-        c1.setBounds(50, 50, 250, 250);
+        this.setComponentPopupMenu(new MenuClicDerecho());
 
-        JLabel c2 = new JLabel("Imagenes");
-        c2.setIcon(new ImageIcon("carpeta.png"));
-        c2.setBounds(350, 50, 250, 250);
+        //Direccion
+        JPanel contenido = panelDirectorio();
+        contenido.setBounds(0, 80, 685, 40);
+        add(contenido);
 
-        JLabel c3 = new JLabel("Descargas");
-        c3.setIcon(new ImageIcon("carpeta.png"));
-        c3.setBounds(50, 250, 250, 250);
+        //Login de usuarios
+        JPanel usuarios = panelLoginUsuario();
+        usuarios.setBounds(0,0, 685, 80);
+        add(usuarios);
+    }
 
+    private void actualizarContenido(ArrayList<ArrayList<String>> contenido){
+        ArrayList<String> archivos = contenido.get(0);
+        ArrayList<String> carpetas = contenido.get(1);
+        int separadorX = 0;
+        int separadorY = 120;
+        int contadorX = 1;
+        //this.removeAll();
+        System.out.println("--------ARCHIVOS-------");
+        for (int i = 0; i < archivos.size(); i++) {
+            System.out.println("contador: " + contadorX);
+            if (contadorX < 4){
+                archivo nuevo = new archivo(archivos.get(i));
+                nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
+                separadorX += nuevo.getAncho();
+                contadorX++;
+                this.add(nuevo);
+            }else{
+                archivo nuevo = new archivo(archivos.get(i));
+                nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
+                separadorX = 0;
+                separadorY += nuevo.getAltura();
+                contadorX = 1;
+                this.add(nuevo);
+            }
+            /*archivo nuevo = new archivo(archivos.get(i));
+            nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
+            separadorX += nuevo.getAncho();
+            contadorX++;
+            this.add(nuevo);*/
+        }
+        System.out.println("-----------------------");
+        System.out.println("--------CARPETAS-------");
+        for (int i = 0; i < carpetas.size(); i++) {
+            System.out.println("contador: " + contadorX);
+            if (contadorX < 4){
+                directorio nuevo = new directorio(carpetas.get(i));
+                nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
+                separadorX += nuevo.getAncho();
+                contadorX++;
+                this.add(nuevo);
+            }else{
+                directorio nuevo = new directorio(carpetas.get(i));
+                nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
+                separadorX = 0;
+                separadorY += nuevo.getAltura();
+                contadorX = 1;
+                this.add(nuevo);
+            }
+            /*System.out.println(carpetas.get(i));
+            directorio nuevo = new directorio(carpetas.get(i));
+            nuevo.setBounds(164, 120, nuevo.getAncho(), nuevo.getAltura());
+            this.add(nuevo);*/
+        }
+        System.out.println("-----------------------");
+
+        /*for (int i = 0; i < HEIGHT/UNIDADES; i++) {
+            g.drawLine(i * UNIDADES, 0, i * UNIDADES, HEIGHT);
+            g.drawLine(0, i * UNIDADES, WIDTH, i * UNIDADES);
+        }*/
+    }
+
+    public JPanel panelDirectorio(){
+        JPanel lugar = new JPanel();
+        lugar.setBorder(BorderFactory.createLineBorder(Color.red));
+
+        JTextField direccion = new JTextField("", 40);
+        JButton btnCambiarDireccion = new JButton("CAMBIAR");
+
+        String prueba1 = "C:\\Users\\hsbar\\Desktop\\Prueba";
+        String prueba2 = "C:\\Users\\hsbar\\Desktop";
+        direccion.setText(prueba2);
+        actualizarContenido(controller.contarNumeroArchivos(direccion.getText()));
+
+        btnCambiarDireccion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                actualizarContenido(controller.contarNumeroArchivos(direccion.getText()));
+            }
+        });
+
+        lugar.add(direccion);
+        lugar.add(btnCambiarDireccion);
+
+        return lugar;
+    }
+
+    public JPanel panelLoginUsuario(){
+        JPanel user = new JPanel();
+        user.setBorder(BorderFactory.createLineBorder(Color.blue));
+
+        JLabel usuario = new JLabel("CONECTADO COMO:");
+        JLabel nombreusuario = new JLabel("prueba");
         JLabel computador = new JLabel("PC");
         computador.setIcon(new ImageIcon("computador.png"));
         computador.setBounds(350, 250, 250, 250);
@@ -37,27 +137,6 @@ public class PanelAccesoRapido extends JPanel {
                 new ConfiguracionDelPC();
             }
         });
-
-        add(c1);
-        add(c2);
-        add(c3);
-        add(computador);
-
-        this.setComponentPopupMenu(new MenuClicDerecho());
-
-        //Login de usuarios
-        JPanel usuarios = panelLoginUsuario();
-        usuarios.setBounds(0,0, 685, 35);
-        add(usuarios);
-    }
-
-    public JPanel panelLoginUsuario(){
-        JPanel user = new JPanel();
-        user.setBorder(BorderFactory.createLineBorder(Color.blue));
-
-        JLabel usuario = new JLabel("CONECTADO COMO:");
-        JLabel nombreusuario = new JLabel("prueba");
-
         usuariosController usercontroller = new usuariosController();
         nombreusuario.setText(usercontroller.IniciarSesion());
 
@@ -72,6 +151,7 @@ public class PanelAccesoRapido extends JPanel {
         user.add(usuario);
         user.add(nombreusuario);
         user.add(signin);
+        user.add(computador);
         return user;
     }
 }
