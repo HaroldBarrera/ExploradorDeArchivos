@@ -1,14 +1,18 @@
 package vista;
 
+import controlador.archivosController;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
 public class Archivos extends ScrollPane {
 
+    archivosController controller = new archivosController();
+
     public Archivos(){
         //Carpetas principales
-        DefaultMutableTreeNode main=new DefaultMutableTreeNode("Explorador");
+        DefaultMutableTreeNode main=new DefaultMutableTreeNode("User");
 
         //Carpetas secundarias
         DefaultMutableTreeNode documents=new DefaultMutableTreeNode("Documentos");
@@ -21,21 +25,16 @@ public class Archivos extends ScrollPane {
         main.add(desktop);
 
         //Items de la carpeta images
-        DefaultMutableTreeNode red=new DefaultMutableTreeNode("red");
-        DefaultMutableTreeNode blue=new DefaultMutableTreeNode("blue");
-        DefaultMutableTreeNode black=new DefaultMutableTreeNode("black");
-        DefaultMutableTreeNode green=new DefaultMutableTreeNode("green");
-        images.add(red); images.add(blue); images.add(black); images.add(green);
+        controller.TreefindContenido("C:\\Users\\hsbar\\Pictures", images);
 
         //Items de la carpeta documents
-        DefaultMutableTreeNode tarea=new DefaultMutableTreeNode("tarea.txt");
-        DefaultMutableTreeNode php=new DefaultMutableTreeNode("conexion.php");
-        DefaultMutableTreeNode python=new DefaultMutableTreeNode("helloworld.py");
-        documents.add(tarea); documents.add(php); documents.add(python);
+        //controller.TreefindContenido("C:\\Users\\hsbar\\Documents", documents);
 
-        //Items de la carpeta documents
-        DefaultMutableTreeNode netbeans=new DefaultMutableTreeNode("netbeans.exe");
-        downloads.add(netbeans);
+        //Items de la carpeta download
+        controller.TreefindContenido("C:\\Users\\hsbar\\Downloads", downloads);
+
+        //Items de la carpeta desktop
+        //controller.TreefindContenido("C:\\Users\\hsbar\\Desktop", desktop);
 
         //Creacion del JTree
         JTree jt=new JTree(main);

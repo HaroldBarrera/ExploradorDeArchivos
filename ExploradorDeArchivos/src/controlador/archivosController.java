@@ -1,6 +1,7 @@
 package controlador;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -96,6 +97,7 @@ public class archivosController {
             System.out.println("El fichero no puede ser borrado");
     }
 
+    //Archivos del panel principal
     public void contarNumeroArchivos(String direccion){
         File folder = new File(direccion);
         File[] listOfFiles = folder.listFiles();
@@ -105,6 +107,27 @@ public class archivosController {
                 System.out.println("File " + listOfFiles[i].getName());
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
+            }
+        }
+    }
+
+    //Archivos del Jtree
+    public void TreefindContenido(String direccion, DefaultMutableTreeNode rama){
+        File folder = new File(direccion);
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+                DefaultMutableTreeNode node=new DefaultMutableTreeNode(listOfFiles[i].getName());
+                rama.add(node);
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+                String carpeta = "\\" + listOfFiles[i].getName();
+                String nuevaDireccion = direccion + carpeta;
+                DefaultMutableTreeNode node=new DefaultMutableTreeNode(listOfFiles[i].getName());
+                TreefindContenido(nuevaDireccion, node);
+                rama.add(node);
             }
         }
     }
