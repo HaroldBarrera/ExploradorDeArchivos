@@ -16,7 +16,6 @@ public class PanelAccesoRapido extends JPanel {
     archivosController controller = new archivosController();
     static int WIDTH = 700;
     static int HEIGHT = 700;
-    static int UNIDADES = 64;
 
     public PanelAccesoRapido(){
         setLayout(null);
@@ -36,13 +35,17 @@ public class PanelAccesoRapido extends JPanel {
         add(usuarios);
     }
 
-    private void actualizarContenido(ArrayList<ArrayList<String>> contenido){
+    private JPanel verArchivosCarpetas(ArrayList<ArrayList<String>> contenido){
+        JPanel panelContenido = new JPanel();
+        panelContenido.setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
+        panelContenido.setLayout(null);
+
+        //Logica
         ArrayList<String> archivos = contenido.get(0);
         ArrayList<String> carpetas = contenido.get(1);
         int separadorX = 0;
-        int separadorY = 120;
+        int separadorY = 0;
         int contadorX = 1;
-        //this.removeAll();
         System.out.println("--------ARCHIVOS-------");
         for (int i = 0; i < archivos.size(); i++) {
             System.out.println("contador: " + contadorX);
@@ -51,20 +54,15 @@ public class PanelAccesoRapido extends JPanel {
                 nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
                 separadorX += nuevo.getAncho();
                 contadorX++;
-                this.add(nuevo);
+                panelContenido.add(nuevo);
             }else{
                 archivo nuevo = new archivo(archivos.get(i));
                 nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
                 separadorX = 0;
                 separadorY += nuevo.getAltura();
                 contadorX = 1;
-                this.add(nuevo);
+                panelContenido.add(nuevo);
             }
-            /*archivo nuevo = new archivo(archivos.get(i));
-            nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
-            separadorX += nuevo.getAncho();
-            contadorX++;
-            this.add(nuevo);*/
         }
         System.out.println("-----------------------");
         System.out.println("--------CARPETAS-------");
@@ -75,26 +73,19 @@ public class PanelAccesoRapido extends JPanel {
                 nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
                 separadorX += nuevo.getAncho();
                 contadorX++;
-                this.add(nuevo);
+                panelContenido.add(nuevo);
             }else{
                 directorio nuevo = new directorio(carpetas.get(i));
                 nuevo.setBounds(separadorX, separadorY, nuevo.getAncho(), nuevo.getAltura());
                 separadorX = 0;
                 separadorY += nuevo.getAltura();
                 contadorX = 1;
-                this.add(nuevo);
+                panelContenido.add(nuevo);
             }
-            /*System.out.println(carpetas.get(i));
-            directorio nuevo = new directorio(carpetas.get(i));
-            nuevo.setBounds(164, 120, nuevo.getAncho(), nuevo.getAltura());
-            this.add(nuevo);*/
         }
         System.out.println("-----------------------");
 
-        /*for (int i = 0; i < HEIGHT/UNIDADES; i++) {
-            g.drawLine(i * UNIDADES, 0, i * UNIDADES, HEIGHT);
-            g.drawLine(0, i * UNIDADES, WIDTH, i * UNIDADES);
-        }*/
+        return panelContenido;
     }
 
     public JPanel panelDirectorio(){
@@ -106,13 +97,18 @@ public class PanelAccesoRapido extends JPanel {
 
         String prueba1 = "C:\\Users\\hsbar\\Desktop\\Prueba";
         String prueba2 = "C:\\Users\\hsbar\\Desktop";
+        String prueba3 = "C:\\Users\\hsbar\\Desktop\\criptografia";
         direccion.setText(prueba2);
-        actualizarContenido(controller.contarNumeroArchivos(direccion.getText()));
+        //actualizarContenido(controller.contarNumeroArchivos(direccion.getText()));
+
+        JPanel visual = verArchivosCarpetas(controller.contarNumeroArchivos(direccion.getText()));
+        visual.setBounds(0, 120, 685, 500);
+        this.add(visual);
 
         btnCambiarDireccion.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                actualizarContenido(controller.contarNumeroArchivos(direccion.getText()));
+                controller.contarNumeroArchivos(direccion.getText());
             }
         });
 
